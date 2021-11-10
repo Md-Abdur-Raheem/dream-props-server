@@ -22,8 +22,15 @@ async function run() {
         const apartmentsCollection = database.collection("apartments");
 
         // api to get all apartments
-        app.get('/apartments', async (req, res) => {
+        app.get('/allApartments', async (req, res) => {
             const cursor = apartmentsCollection.find({});
+            const apartments = await cursor.toArray();
+            res.json(apartments);
+        })
+
+        // api to get 6 apartments
+        app.get('/apartments', async (req, res) => {
+            const cursor = apartmentsCollection.find({}).limit(6);
             const apartments = await cursor.toArray();
             res.json(apartments);
         })
