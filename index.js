@@ -20,6 +20,8 @@ async function run() {
         await client.connect();
         const database = client.db("DreamProps");
         const apartmentsCollection = database.collection("apartments");
+        const usersCollection = database.collection("users");
+        const ordersCollection = database.collection("orders");
 
         // api to get all apartments
         app.get('/allApartments', async (req, res) => {
@@ -40,6 +42,21 @@ async function run() {
             const id = req.params;
             const query = {_id: ObjectId(id)}
             const result = await apartmentsCollection.findOne(query);
+            res.json(result);
+        })
+
+        //api to add user in the database
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const result = await usersCollection.insertOne(user);
+            res.json(result);
+        })
+
+        //api to post users orders
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await ordersCollection.insertOne(order);
             res.json(result);
         })
 
