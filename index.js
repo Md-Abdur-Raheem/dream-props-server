@@ -35,6 +35,14 @@ async function run() {
             res.json(apartments);
         })
 
+        //api to get appartments by id
+        app.get('/appartments/:id', async (req, res) => {
+            const id = req.params;
+            const query = {_id: ObjectId(id)}
+            const result = await apartmentsCollection.findOne(query);
+            res.json(result);
+        })
+
     }
     finally {
         //await client.close()
