@@ -84,6 +84,13 @@ async function run() {
             res.json(result);
         })
 
+        //api to get all reviews
+        app.get('/reviews', async (req, res) => {
+            const cursor = reviewsCollection.find({});
+            const result = await cursor.toArray();
+            res.json(result);
+        })
+
     }
     finally {
         //await client.close()
