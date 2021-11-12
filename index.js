@@ -22,6 +22,7 @@ async function run() {
         const apartmentsCollection = database.collection("apartments");
         const usersCollection = database.collection("users");
         const ordersCollection = database.collection("orders");
+        const reviewsCollection = database.collection("reviews");
 
         // api to get all apartments
         app.get('/allApartments', async (req, res) => {
@@ -73,6 +74,13 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await ordersCollection.deleteOne(query);
+            res.json(result);
+        })
+
+        //api to add review
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await reviewsCollection.insertOne(review);
             res.json(result);
         })
 
