@@ -91,6 +91,23 @@ async function run() {
             res.json(result);
         })
 
+        //api to make admin
+        app.put('/users', async (req, res) => {
+            const email = req.body.email;
+            const user = await usersCollection.findOne({ email: email });
+            // user.role = "Admin";
+            const updateDoc = { $set: {role:"Admin"} };
+            const result = await usersCollection.updateOne(user, updateDoc);
+            res.json(result);
+        })
+
+        //api to get all admin
+        app.get('/users', async (req, res) => {
+            const cursor = usersCollection.find({ role: 'Admin' });
+            const result = await cursor.toArray();
+            res.json(result);
+        })
+
     }
     finally {
         //await client.close()
