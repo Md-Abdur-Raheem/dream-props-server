@@ -108,6 +108,17 @@ async function run() {
             res.json(result);
         })
 
+        //api to check an user either he is admin or not
+        app.get('/admin/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = await usersCollection.findOne({ email: email });
+            let admin = false;
+            if (user?.role === "Admin") {
+                admin = true;
+            }
+            res.json({ admin });
+        })
+
     }
     finally {
         //await client.close()
