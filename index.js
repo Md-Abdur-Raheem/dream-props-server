@@ -119,6 +119,23 @@ async function run() {
             res.json({ admin });
         })
 
+        //api to get all orders
+        app.get('/allOrders', async (req, res) => {
+            const cursor = ordersCollection.find({});
+            const result = await cursor.toArray();
+            res.json(result);
+        })
+
+        //api to update order status
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedStatus = req.body.status;
+            const filter = { _id: ObjectId(id) };
+            const updateDoc = {$set: {status: updatedStatus}}
+            const result = await ordersCollection.updateOne(filter, updateDoc);
+            res.json(result);
+        })
+
     }
     finally {
         //await client.close()
