@@ -143,6 +143,14 @@ async function run() {
             res.json(result);
         })
 
+        //api to delete a property
+        app.delete('/allApartments/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const result = await apartmentsCollection.deleteOne(filter);
+            res.json(result);
+        })
+
     }
     finally {
         //await client.close()
