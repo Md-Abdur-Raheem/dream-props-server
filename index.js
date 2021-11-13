@@ -136,6 +136,13 @@ async function run() {
             res.json(result);
         })
 
+        //api to add new property
+        app.post('/addNewProperty', async (req, res) => {
+            const property = req.body;
+            const result = await apartmentsCollection.insertOne(property);
+            res.json(result);
+        })
+
     }
     finally {
         //await client.close()
